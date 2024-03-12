@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Hook.gd" type="Script" id=1]
+
+[node name="Hook" type="Area2D"]
+position = Vector2( -4.83169e-13, 0 )
+rotation = 1.5708
+scale = Vector2( 1, 10 )
+collision_layer = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0, -1 )
+scale = Vector2( 1, 1.875 )
+polygon = PoolVector2Array( -7, 0.266667, 9, 0.533333, -7, 0.8 )
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2( -13.8156, 0.824733 )
+rotation = -1.5708
+scale = Vector2( 1.82936, 2.28331 )
+polygon = PoolVector2Array( 0.177512, 2.98498, 0.450831, 9.55439, 0.724151, 2.98498 )
+
+[node name="Sprite" type="Sprite" parent="."]
