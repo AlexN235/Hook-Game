@@ -30,5 +30,3 @@ func _integrate_forces(state):
 		applied_force = Vector2(-x, -y)
 
 
-func _on_Hook_body_entered(body):
-	print(body)

@@ -10,9 +10,9 @@
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 508, 280 )
+collision_mask = 3
 
-[node name="Hook" parent="Player" instance=ExtResource( 3 )]
-position = Vector2( -508, -280 )
+[node name="Hook" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, 0 )
 
-[connection signal="body_entered" from="Player/Hook" to="Player" method="_on_Hook_body_entered"]
-[connection signal="body_entered" from="Player/Hook" to="Player/Hook" method="_on_Hook_body_entered"]
+[connection signal="body_entered" from="Hook" to="Hook" method="_on_Hook_body_entered"]
