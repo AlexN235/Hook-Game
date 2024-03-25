@@ -5,16 +5,37 @@ absorbent = true
 
 [node name="Walls Container" type="Node"]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2( -1, -1 )
 collision_mask = 2
 physics_material_override = SubResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PoolVector2Array( 147, 276, 209, 274, 227, 464, 796, 464, 785, 270, 871, 262, 883, 508, 152, 518 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ground"]
+polygon = PoolVector2Array( 30, 459, 67, 395, 227, 464, 796, 464, 954, 390, 1022, 443, 883, 508, 152, 518 )
 
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D"]
+[node name="Polygon2D" type="Polygon2D" parent="Ground"]
 color = Color( 0.607843, 0.607843, 0.607843, 1 )
-polygon = PoolVector2Array( 147, 277, 209, 272, 227, 463, 795, 463, 784, 270, 870, 262, 882, 507, 151, 518 )
+polygon = PoolVector2Array( 31, 458, 68, 395, 227, 463, 795, 463, 954, 390, 1023, 444, 885, 508, 151, 518 )
+
+[node name="Ceiling" type="StaticBody2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ceiling"]
+polygon = PoolVector2Array( 58, 34, 978, 32, 800, 68, 434, 75, 394, 248, 335, 71, 255, 244, 199, 69, 145, 253, 99, 74, 33, 261, 11, 37 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Ceiling"]
+color = Color( 0.215686, 0.486275, 0.592157, 1 )
+polygon = PoolVector2Array( 10, 35, 975, 32, 803, 69, 433, 75, 395, 248, 335, 70, 255, 244, 200, 68, 145, 254, 98, 75, 34, 263 )
+
+[node name="Platform" type="StaticBody2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Platform"]
+polygon = PoolVector2Array( 540, 199, 888, 199, 931, 219, 566, 221 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Platform"]
+color = Color( 0.188235, 0.521569, 0.545098, 1 )
+polygon = PoolVector2Array( 540, 199, 891, 200, 930, 218, 564, 221 )
