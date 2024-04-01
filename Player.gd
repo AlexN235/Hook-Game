@@ -7,9 +7,8 @@ var torque = 20000
 signal hook_launch(mouse_pos, player_pos)
 signal release_signal()
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	screen_size = get_viewport_rect().size# Called every frame. 'delta' is the elapsed time since the previous frame.
+	screen_size = get_viewport_rect().size 
 func _integrate_forces(state):
 	var x = thrust * sin(PI/4)
 	var y = thrust * cos(PI/4)

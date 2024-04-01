@@ -1,15 +1,15 @@
 extends Area2D
 
+enum STATE {INACTIVE, ACTIVE, HOOKED, RETURN}
 var Rope = preload("res://Rope.tscn")
 
 var velocity = Vector2(1,1) * 500
 var ang = 2*PI
-enum STATE {INACTIVE, ACTIVE, HOOKED, RETURN}
 var hook_state = STATE.INACTIVE
 var active_hook_duration = 0
 
 ##### TO DO: ######   
-# visual link between player and hook
+# Implement player movement during hooked state.
 ##### ------ ######
 
 func _ready():
@@ -42,6 +42,7 @@ func _process(delta):
 			position -= direction*delta
 
 func shoot(mouse_pos, player_pos):
+### Lauch the hook in the mouse direction ###
 	if(hook_state == STATE.HOOKED):
 		delete_rope()
 		self.switch_to_inactive()
@@ -53,12 +54,14 @@ func shoot(mouse_pos, player_pos):
 		active_hook_duration = 0
 
 func _on_Hook_body_entered(body):
+### When the flying hook returns to the player's location ###
 	if(body == get_node("../Player") && hook_state == STATE.RETURN):
 		self.switch_to_inactive()
 	if(body != get_node("../Player") && hook_state == STATE.ACTIVE):
 		self.switch_to_hooked()
 
 func release():
+### unhook the hook ###
 	if(hook_state == STATE.HOOKED):
 		self.switch_to_inactive()
 
@@ -78,6 +81,7 @@ func switch_to_return():
 	hook_state = STATE.RETURN
 	
 func generate_rope():
+### Creates a new rope in the scene ###
 	var hook_start_pos = get_node("../Player").global_position
 	var hook_end_pos = get_node("../Hook").global_position
 
@@ -86,5 +90,5 @@ func generate_rope():
 	rope.spawn_rope(hook_start_pos, hook_end_pos)
 	
 func delete_rope():
-	#get_node("../Rope").delete_rope()
+### Removes the rope from the scene ###
 	get_node("../Rope").queue_free()

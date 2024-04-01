@@ -10,6 +10,7 @@ extents = Vector2( 11.5, 20 )
 position = Vector2( 62, 35 )
 collision_layer = 2
 mode = 2
+mass = 1.02041
 gravity_scale = 10.0
 script = ExtResource( 1 )
 
