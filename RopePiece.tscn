@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
+custom_solver_bias = 1.0
 radius = 2.0
 height = 8.0
 
@@ -13,8 +14,9 @@ gravity_scale = 9.0
 [node name="C" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 7 )
 shape = SubResource( 1 )
-one_way_collision = true
+one_way_collision_margin = 0.0
 
 [node name="J" type="PinJoint2D" parent="C"]
 position = Vector2( 0, 3 )
-bias = 0.034
+bias = 0.098
+softness = 1.0

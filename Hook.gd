@@ -92,3 +92,6 @@ func generate_rope():
 func delete_rope():
 ### Removes the rope from the scene ###
 	get_node("../Rope").queue_free()
+
+func is_hooked():
+	return hook_state == STATE.HOOKED
