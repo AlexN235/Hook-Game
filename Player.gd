@@ -55,7 +55,6 @@ func move_horizontal_condition():
 	return false;
 func is_on_ground():
 	player_state == STATE.GROUND
-
 func is_hooked():
 	return $"../Hook".is_hooked()
 
