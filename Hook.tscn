@@ -24,3 +24,5 @@ scale = Vector2( 1.82936, 2.28331 )
 polygon = PoolVector2Array( 0.177512, 2.98498, 0.450831, 9.55439, 0.724151, 2.98498 )
 
 [node name="Sprite" type="Sprite" parent="."]
+
+[connection signal="body_shape_entered" from="." to="." method="_on_Hook_body_shape_entered"]

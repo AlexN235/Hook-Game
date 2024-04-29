@@ -9,4 +9,3 @@
 
 [node name="PlayerChar" parent="." instance=ExtResource( 2 )]
 position = Vector2( 511, 301 )
-collision_layer = 2
