@@ -3,6 +3,8 @@ extends Area2D
 var velocity
 var ang
 var duration
+var player
+var direction : Vector2
 
 signal hit_detected(hit_location)
 
@@ -14,7 +16,7 @@ signal hit_detected(hit_location)
 ###
 
 func _ready():
-	var player = get_node("../PlayerChar")
+	player = get_parent()
 	velocity = Vector2(1,1) * 1000
 	ang = PI*5/8
 	duration = 10
@@ -22,8 +24,7 @@ func _ready():
 func _process(delta):
 	if(duration == 0):
 		queue_free()
-	var direction = Vector2(1, 1)
-	direction.x = velocity.x * cos(ang)
+	direction.x = velocity.x * cos(ang) * player.player_direction
 	direction.y = velocity.y * sin(ang)
 	position -= direction * delta
 	duration -= 1
