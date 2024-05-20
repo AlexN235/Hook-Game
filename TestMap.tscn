@@ -1,11 +1,165 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Walls Container.tscn" type="PackedScene" id=1]
+[ext_resource path="res://FlatBrick.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PlayerChar.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Flat Wall.tscn" type="PackedScene" id=3]
+[ext_resource path="res://3Platform.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Plain Block.tscn" type="PackedScene" id=5]
 
 [node name="TestMap" type="Node"]
 
-[node name="Walls Container" parent="." instance=ExtResource( 1 )]
-
 [node name="PlayerChar" parent="." instance=ExtResource( 2 )]
-position = Vector2( 511, 301 )
+position = Vector2( 59, 110 )
+
+[node name="Area1" type="Node2D" parent="."]
+position = Vector2( 10, 10 )
+
+[node name="Walls" type="Node2D" parent="Area1"]
+
+[node name="Flat Wall7" parent="Area1/Walls" instance=ExtResource( 3 )]
+position = Vector2( 600, 220 )
+
+[node name="Flat Wall4" parent="Area1/Walls" instance=ExtResource( 3 )]
+position = Vector2( 0, 300 )
+
+[node name="Flat Wall5" parent="Area1/Walls" instance=ExtResource( 3 )]
+position = Vector2( 600, 0 )
+
+[node name="Flat Wall6" parent="Area1/Walls" instance=ExtResource( 3 )]
+position = Vector2( 600, 320 )
+
+[node name="Flat Wall" parent="Area1/Walls" instance=ExtResource( 3 )]
+
+[node name="Flat Wall2" parent="Area1/Walls" instance=ExtResource( 3 )]
+position = Vector2( 0, 100 )
+
+[node name="Flat Wall3" parent="Area1/Walls" instance=ExtResource( 3 )]
+position = Vector2( 0, 200 )
+
+[node name="Flat Brick" parent="Area1/Walls" instance=ExtResource( 1 )]
+position = Vector2( 201, -1 )
+
+[node name="Flat Brick2" parent="Area1/Walls" instance=ExtResource( 1 )]
+position = Vector2( 1, -1 )
+
+[node name="Flat Brick3" parent="Area1/Walls" instance=ExtResource( 1 )]
+position = Vector2( 401, -1 )
+
+[node name="Flat Brick4" parent="Area1/Walls" instance=ExtResource( 1 )]
+position = Vector2( 0, 400 )
+
+[node name="Flat Brick5" parent="Area1/Walls" instance=ExtResource( 1 )]
+position = Vector2( 200, 400 )
+
+[node name="Flat Brick6" parent="Area1/Walls" instance=ExtResource( 1 )]
+position = Vector2( 400, 400 )
+
+[node name="Obstacles" type="Node2D" parent="Area1"]
+
+[node name="3Platform" parent="Area1/Obstacles" instance=ExtResource( 4 )]
+position = Vector2( 200, 300 )
+
+[node name="3Platform2" parent="Area1/Obstacles" instance=ExtResource( 4 )]
+position = Vector2( 540, 220 )
+
+[node name="3Platform3" parent="Area1/Obstacles" instance=ExtResource( 4 )]
+position = Vector2( 260, 220 )
+
+[node name="Area2" type="Node2D" parent="."]
+position = Vector2( 620, 0 )
+
+[node name="Walls" type="Node2D" parent="Area2"]
+
+[node name="Ceiling" type="Node2D" parent="Area2/Walls"]
+
+[node name="Flat Brick" parent="Area2/Walls/Ceiling" instance=ExtResource( 1 )]
+position = Vector2( 10, 10 )
+
+[node name="Flat Brick2" parent="Area2/Walls/Ceiling" instance=ExtResource( 1 )]
+position = Vector2( 210, 10 )
+
+[node name="Floor" type="Node2D" parent="Area2/Walls"]
+
+[node name="Flat Brick" parent="Area2/Walls/Floor" instance=ExtResource( 1 )]
+position = Vector2( 10, 590 )
+
+[node name="Flat Brick2" parent="Area2/Walls/Floor" instance=ExtResource( 1 )]
+position = Vector2( 210, 590 )
+
+[node name="Left Wall" type="Node2D" parent="Area2/Walls"]
+
+[node name="Flat Wall" parent="Area2/Walls/Left Wall" instance=ExtResource( 3 )]
+position = Vector2( 10, 10 )
+
+[node name="Flat Wall3" parent="Area2/Walls/Left Wall" instance=ExtResource( 3 )]
+position = Vector2( 10, 210 )
+
+[node name="Flat Wall4" parent="Area2/Walls/Left Wall" instance=ExtResource( 3 )]
+position = Vector2( 10, 310 )
+
+[node name="Flat Wall5" parent="Area2/Walls/Left Wall" instance=ExtResource( 3 )]
+position = Vector2( 10, 410 )
+
+[node name="Right Wall" type="Node2D" parent="Area2/Walls"]
+
+[node name="Flat Wall" parent="Area2/Walls/Right Wall" instance=ExtResource( 3 )]
+position = Vector2( 390, 30 )
+
+[node name="Flat Wall2" parent="Area2/Walls/Right Wall" instance=ExtResource( 3 )]
+position = Vector2( 390, 120 )
+
+[node name="Flat Wall3" parent="Area2/Walls/Right Wall" instance=ExtResource( 3 )]
+position = Vector2( 390, 220 )
+
+[node name="Flat Wall4" parent="Area2/Walls/Right Wall" instance=ExtResource( 3 )]
+position = Vector2( 390, 320 )
+
+[node name="Flat Wall5" parent="Area2/Walls/Right Wall" instance=ExtResource( 3 )]
+position = Vector2( 390, 420 )
+
+[node name="Flat Wall6" parent="Area2/Walls/Right Wall" instance=ExtResource( 3 )]
+position = Vector2( 390, 510 )
+
+[node name="Area3" type="Node2D" parent="."]
+position = Vector2( 0, 420 )
+
+[node name="Walls" type="Node2D" parent="Area3"]
+
+[node name="Ceiling" type="Node2D" parent="Area3/Walls"]
+
+[node name="Flat Brick" parent="Area3/Walls/Ceiling" instance=ExtResource( 1 )]
+position = Vector2( 10, 10 )
+
+[node name="Flat Brick2" parent="Area3/Walls/Ceiling" instance=ExtResource( 1 )]
+position = Vector2( 210, 10 )
+
+[node name="Flat Brick3" parent="Area3/Walls/Ceiling" instance=ExtResource( 1 )]
+position = Vector2( 410, 10 )
+
+[node name="Floor" type="Node2D" parent="Area3/Walls"]
+
+[node name="Flat Brick" parent="Area3/Walls/Floor" instance=ExtResource( 1 )]
+position = Vector2( 10, 170 )
+
+[node name="Flat Brick2" parent="Area3/Walls/Floor" instance=ExtResource( 1 )]
+position = Vector2( 210, 170 )
+
+[node name="Flat Brick3" parent="Area3/Walls/Floor" instance=ExtResource( 1 )]
+position = Vector2( 410, 170 )
+
+[node name="Left Wall" type="Node2D" parent="Area3/Walls"]
+
+[node name="Flat Wall" parent="Area3/Walls/Left Wall" instance=ExtResource( 3 )]
+position = Vector2( 10, 30 )
+
+[node name="Flat Wall2" parent="Area3/Walls/Left Wall" instance=ExtResource( 3 )]
+position = Vector2( 10, 70 )
+
+[node name="Right Wall" type="Node2D" parent="Area3/Walls"]
+
+[node name="Flat Wall" parent="Area3/Walls/Right Wall" instance=ExtResource( 3 )]
+position = Vector2( 610, -10 )
+
+[node name="Plain Block" parent="Area3/Walls/Right Wall" instance=ExtResource( 5 )]
+position = Vector2( 610, 170 )
+collision_mask = 2

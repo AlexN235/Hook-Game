@@ -2,10 +2,9 @@
 
 [ext_resource path="res://Plain Block.tscn" type="PackedScene" id=1]
 
-[node name="Flat Brick" type="Node"]
+[node name="Flat Brick" type="Node2D"]
 
 [node name="Ground" type="Node2D" parent="."]
-position = Vector2( 54, 190 )
 __meta__ = {
 "_edit_group_": true
 }

@@ -10,6 +10,7 @@ var dash_timer : int
 var dash_cd : int
 var animation_frame_remainder : int
 var hor_movement : int
+var jump_animation : int
 
 # Swing stats
 var swing_time : Vector2
@@ -21,7 +22,7 @@ var hit_occured : bool
 # TEMP
 var hook_line : Vector2
 
-enum STATE {INAIR, ONGROUND, HOOKED}
+enum STATE {INAIR, ONGROUND, HOOKED, JUMP}
 
 func _ready():
 	speed = 20
@@ -75,7 +76,9 @@ func _process(delta):
 	move_and_slide(velocity, Vector2.UP)
 	update()
 
-# State change functions
+################################################################################
+############################ State Change Functions ############################
+################################################################################
 func on_ground():
 	player_state = STATE.ONGROUND
 	dash_cd = 1
@@ -87,10 +90,18 @@ func is_hooked():
 	curr_swing_time.y = int(sqrt(pow(swing_time.y, 2))/2)
 	swing_direction.y = 1
 	swing_direction.x = player_direction
+func is_jump():
+	player_state = STATE.JUMP
+	jump_animation = 10
+func in_action():
+	player_state != STATE.ONGROUND || player_state != STATE.INAIR
 func in_animation():
 	velocity = Vector2(0, 0)
 
-# Movement and action functions
+
+################################################################################
+######################## Movement and action functions #########################
+################################################################################
 func left():
 	if Input.is_action_pressed("move_left"):
 		return scale_speed(10)
@@ -101,6 +112,9 @@ func right():
 	return 0
 func dash_boost():
 	return dash_timer * scale_speed(20) * player_direction
+func jump():
+	if Input.is_action_pressed("jump"):
+		velocity.y -= scale_speed(1.2*jump_animation/2)
 func scale_speed(var i : float):
 	return i * speed
 func _hook_hit_detected(var hit_location):
@@ -136,11 +150,18 @@ func movement_in_hooked():
 	velocity.x += scale_speed(swing_speed.x * swing_direction.x)
 	velocity.y += scale_speed(swing_speed.y * swing_direction.y)
 func movement_in_ground_air():
-	if is_on_floor():
+	if player_state == STATE.JUMP:
+		if jump_animation > 0:
+			jump()
+		else:
+			in_air()
+		jump_animation -= 1;
+	elif is_on_floor():
 		on_ground()
 		velocity.y = 0
 	else:
 		in_air()
+		
 	# Horizontal Movement
 	velocity.x = hor_movement
 	if hor_movement == 0:
@@ -148,5 +169,5 @@ func movement_in_ground_air():
 	
 	# Vertical Movement
 	if Input.is_action_just_pressed("jump") && player_state == STATE.ONGROUND:
-		velocity.y -= scale_speed(25)
+		is_jump()
 	velocity.y += scale_speed(1)

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Plain Block.tscn" type="PackedScene" id=1]
+
+[node name="3Platform" type="Node2D"]
+
+[node name="Plain Block" parent="." instance=ExtResource( 1 )]
+collision_mask = 2
+
+[node name="Plain Block2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 20, 0 )
+collision_mask = 2
+
+[node name="Plain Block3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 40, 0 )
+collision_mask = 2
