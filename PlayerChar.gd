@@ -31,6 +31,7 @@ func _ready():
 	swing_speed = Vector2.ZERO
 	swing_direction = Vector2(1,1)
 	hit_occured = false
+	connect_to_map()
 
 func _draw():
 	var plots = []
@@ -40,6 +41,9 @@ func _draw():
 	draw_polyline(plots, Color.black)
 
 func _process(delta):
+	# Camera
+	var cam = get_node("Camera2D")
+	
 	hor_movement = right() - left() + dash_boost()
 	if(player_state == STATE.HOOKED):
 		movement_in_hooked()
@@ -76,6 +80,9 @@ func _process(delta):
 	move_and_slide(velocity, Vector2.UP)
 	update()
 
+func connect_to_map():
+	pass#get_node("get the nodes").connect("hit_detected", self, "_map_portal_hit_detected")
+
 ################################################################################
 ############################ State Change Functions ############################
 ################################################################################
@@ -97,7 +104,6 @@ func in_action():
 	player_state != STATE.ONGROUND || player_state != STATE.INAIR
 func in_animation():
 	velocity = Vector2(0, 0)
-
 
 ################################################################################
 ######################## Movement and action functions #########################
@@ -128,6 +134,8 @@ func _hook_hit_detected(var hit_location):
 	hit_occured = true
 	hook_line = hit_location
 	print(hook_line)
+func _map_portal_hit_detected(var info):
+	global_position = info.get_exit_location()
 func get_swinging_acceleration(var length : float, var time : float): 
 	var a = (2*length)/(time*time)
 	return a*speed

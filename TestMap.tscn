@@ -1,15 +1,28 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://FlatBrick.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PlayerChar.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Flat Wall.tscn" type="PackedScene" id=3]
 [ext_resource path="res://3Platform.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Plain Block.tscn" type="PackedScene" id=5]
+[ext_resource path="res://MoverPair.tscn" type="PackedScene" id=6]
+[ext_resource path="res://TestMap.gd" type="Script" id=7]
 
 [node name="TestMap" type="Node"]
+script = ExtResource( 7 )
 
 [node name="PlayerChar" parent="." instance=ExtResource( 2 )]
-position = Vector2( 59, 110 )
+position = Vector2( 83, 80 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Camera2D" type="Camera2D" parent="PlayerChar"]
+current = true
+zoom = Vector2( 0.7, 0.7 )
+limit_left = 0
+limit_top = 0
+smoothing_enabled = true
 
 [node name="Area1" type="Node2D" parent="."]
 position = Vector2( 10, 10 )
@@ -163,3 +176,5 @@ position = Vector2( 610, -10 )
 [node name="Plain Block" parent="Area3/Walls/Right Wall" instance=ExtResource( 5 )]
 position = Vector2( 610, 170 )
 collision_mask = 2
+
+[node name="MoverPair" parent="." instance=ExtResource( 6 )]
