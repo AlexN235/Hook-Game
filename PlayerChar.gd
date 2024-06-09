@@ -3,6 +3,8 @@ extends KinematicBody2D
 var Hook = preload("res://Hook.tscn")
 var player_state
 var hook
+var buffer
+var buffer_timer : int
 var velocity : Vector2 
 var speed : int
 var player_direction : int
@@ -23,6 +25,7 @@ var hit_occured : bool
 var hook_line : Vector2
 
 enum STATE {INAIR, ONGROUND, HOOKED, JUMP}
+enum ACTION {JUMP, HOOK, DASH}
 
 func _ready():
 	speed = 20
@@ -31,7 +34,6 @@ func _ready():
 	swing_speed = Vector2.ZERO
 	swing_direction = Vector2(1,1)
 	hit_occured = false
-	connect_to_map()
 
 func _draw():
 	var plots = []
@@ -45,43 +47,53 @@ func _process(delta):
 	var cam = get_node("Camera2D")
 	
 	hor_movement = right() - left() + dash_boost()
+	
+	## Action with completely locked animations.
+	if Input.is_action_pressed("jump"):
+		buffer = ACTION.JUMP
+		set_buffer_timer()
 	if(player_state == STATE.HOOKED):
 		movement_in_hooked()
 	else:
 		movement_in_ground_air()
-		
-	if Input.is_action_just_pressed("dash") && dash_cd > 0:
-		dash_cd -= 1
-		dash_timer = 5
 	
-	if Input.is_action_just_pressed("hook") && player_state != STATE.HOOKED:
-		hook = Hook.instance()
-		add_child(hook)
-		get_node("Hook").connect("hit_detected", self, "_hook_hit_detected")
-		animation_frame_remainder = 15
-		
-	if Input.is_action_just_pressed("hook") && player_state == STATE.HOOKED:
-		in_air()
-		hit_occured = false
-		
+	## Actions with semi-locked animations.
+	if Input.is_action_just_pressed("hook"):
+		buffer = ACTION.HOOK
+		set_buffer_timer()
+	## Actions with no locked animations.
+	if Input.is_action_just_pressed("dash"):
+		buffer = ACTION.DASH
+		set_buffer_timer()
+	
+	# action buffer
+	var act = perform_action(get_next_action())
+	if act == true:
+		buffer = null
+	
+	## Animation lock checker (only used for hook animation)
 	if animation_frame_remainder > 0:
 		animation_frame_remainder -= 1
 		in_animation()
 		if animation_frame_remainder == 0 && hit_occured:
 			is_hooked()
 	
+	# timers
 	if dash_timer > 0:
 		dash_timer -= 1
+	if(buffer_timer > 0):
+		buffer_timer -= 1
+	elif(buffer_timer == 0):
+		buffer = null
+	
+	# player direction
 	if hor_movement > 0:
 		player_direction = 1
 	if hor_movement < 0:
 		player_direction = -1
-	
+
 	move_and_slide(velocity, Vector2.UP)
 	update()
-
-func connect_to_map():
-	pass#get_node("get the nodes").connect("hit_detected", self, "_map_portal_hit_detected")
 
 ################################################################################
 ############################ State Change Functions ############################
@@ -106,7 +118,7 @@ func in_animation():
 	velocity = Vector2(0, 0)
 
 ################################################################################
-######################## Movement and action functions #########################
+############################## Movement functions ##############################
 ################################################################################
 func left():
 	if Input.is_action_pressed("move_left"):
@@ -118,28 +130,30 @@ func right():
 	return 0
 func dash_boost():
 	return dash_timer * scale_speed(20) * player_direction
-func jump():
-	if Input.is_action_pressed("jump"):
-		velocity.y -= scale_speed(1.2*jump_animation/2)
 func scale_speed(var i : float):
+	# speed of objects all scaled by this function.
 	return i * speed
 func _hook_hit_detected(var hit_location):
 	var dist : Vector2
 	var angle = global_position.angle_to_point(hit_location)
 	var h = global_position.distance_to(hit_location)
+	
+	# calculated distance of player to hit location.
 	dist.y = h - (h * sin(angle))
 	dist.x = abs(hit_location.x - global_position.x)
+	
+	# determine swinging speed to simulate pendulum effect.
 	swing_speed.x = get_swinging_acceleration(dist.x, swing_time.x) 
 	swing_speed.y = get_swinging_acceleration(dist.y, swing_time.y) 
+	
 	hit_occured = true
-	hook_line = hit_location
-	print(hook_line)
-func _map_portal_hit_detected(var info):
-	global_position = info.get_exit_location()
+	hook_line = hit_location ## TEMP
 func get_swinging_acceleration(var length : float, var time : float): 
+	# determine the acceleration needed for player to have a pendulum effect.
 	var a = (2*length)/(time*time)
 	return a*speed
 func movement_in_hooked():
+	# Player's movement during the 'hooked' state.
 	if(curr_swing_time.x == swing_time.x):
 		swing_direction.x = -1
 		velocity.x = scale_speed(swing_speed.x*swing_time.x)/2
@@ -158,10 +172,10 @@ func movement_in_hooked():
 	velocity.x += scale_speed(swing_speed.x * swing_direction.x)
 	velocity.y += scale_speed(swing_speed.y * swing_direction.y)
 func movement_in_ground_air():
+	# Movement of player when they are in the air or on the ground. Also deals
+	# with player state changes during those times.
 	if player_state == STATE.JUMP:
-		if jump_animation > 0:
-			jump()
-		else:
+		if jump_animation == 0:
 			in_air()
 		jump_animation -= 1;
 	elif is_on_floor():
@@ -179,3 +193,44 @@ func movement_in_ground_air():
 	if Input.is_action_just_pressed("jump") && player_state == STATE.ONGROUND:
 		is_jump()
 	velocity.y += scale_speed(1)
+
+################################################################################
+############################### Action functions ###############################
+################################################################################
+func get_next_action():
+	if buffer != null:
+		return buffer
+	return null
+
+func perform_action(action):
+	var action_success = false
+	# Jump Action
+	if action == ACTION.JUMP && jump_animation > 0:
+		velocity.y -= scale_speed(1.2*jump_animation/2)
+		action_success = true
+
+	# Hook Action
+	if action == ACTION.HOOK:
+		# Throw out hook
+		if player_state != STATE.HOOKED:
+			hook = Hook.instance()
+			add_child(hook)
+			get_node("Hook").connect("hit_detected", self, "_hook_hit_detected")
+			animation_frame_remainder = 15
+		# Retract hook
+		elif player_state == STATE.HOOKED:
+			in_air()
+			hit_occured = false
+		action_success = true
+
+	# Dash action
+	if action == ACTION.DASH && dash_cd > 0:
+		dash_cd -= 1
+		dash_timer = 5
+		action_success = true
+
+	return action_success
+
+func set_buffer_timer():
+	buffer_timer = 5
+	
