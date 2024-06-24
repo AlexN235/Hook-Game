@@ -15,14 +15,14 @@ __meta__ = {
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( 0, -1 )
 scale = Vector2( 1, 1.875 )
-polygon = PoolVector2Array( -7, 0.266667, 9, 0.533333, -7, 0.8 )
+polygon = PackedVector2Array( -7, 0.266667, 9, 0.533333, -7, 0.8 )
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 position = Vector2( -13.8156, 0.824733 )
 rotation = -1.5708
 scale = Vector2( 1.82936, 2.28331 )
-polygon = PoolVector2Array( 0.177512, 2.98498, 0.450831, 9.55439, 0.724151, 2.98498 )
+polygon = PackedVector2Array( 0.177512, 2.98498, 0.450831, 9.55439, 0.724151, 2.98498 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 
 [connection signal="body_shape_entered" from="." to="." method="_on_Hook_body_shape_entered"]

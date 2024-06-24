@@ -1,11 +1,11 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 var Hook = preload("res://Hook.tscn")
 var player_state
 var hook
 var buffer
 var buffer_timer : int
-var velocity : Vector2 
+var velo : Vector2 
 var speed : int
 var player_direction : int
 var dash_timer : int
@@ -40,10 +40,10 @@ func _draw():
 	if Input.is_action_pressed("hook"):
 		plots.append(Vector2.ZERO)
 		plots.append(hook_line - global_position)
-	draw_polyline(plots, Color.black)
+	draw_polyline(plots, Color.BLACK)
 
 func _process(delta):
-	# Camera
+	# Camera3D
 	var cam = get_node("Camera2D")
 	
 	hor_movement = right() - left() + dash_boost()
@@ -92,8 +92,10 @@ func _process(delta):
 	if hor_movement < 0:
 		player_direction = -1
 
-	move_and_slide(velocity, Vector2.UP)
-	update()
+	set_velocity(velo)
+	set_up_direction(Vector2.UP)
+	move_and_slide()
+	queue_redraw()
 
 ################################################################################
 ############################ State Change Functions ############################
@@ -115,7 +117,7 @@ func is_jump():
 func in_action():
 	player_state != STATE.ONGROUND || player_state != STATE.INAIR
 func in_animation():
-	velocity = Vector2(0, 0)
+	velo = Vector2(0, 0)
 
 ################################################################################
 ############################## Movement functions ##############################
@@ -130,10 +132,10 @@ func right():
 	return 0
 func dash_boost():
 	return dash_timer * scale_speed(20) * player_direction
-func scale_speed(var i : float):
+func scale_speed(i : float):
 	# speed of objects all scaled by this function.
 	return i * speed
-func _hook_hit_detected(var hit_location):
+func _hook_hit_detected(hit_location):
 	var dist : Vector2
 	var angle = global_position.angle_to_point(hit_location)
 	var h = global_position.distance_to(hit_location)
@@ -148,7 +150,7 @@ func _hook_hit_detected(var hit_location):
 	
 	hit_occured = true
 	hook_line = hit_location ## TEMP
-func get_swinging_acceleration(var length : float, var time : float): 
+func get_swinging_acceleration(length : float, time : float): 
 	# determine the acceleration needed for player to have a pendulum effect.
 	var a = (2*length)/(time*time)
 	return a*speed
@@ -156,21 +158,21 @@ func movement_in_hooked():
 	# Player's movement during the 'hooked' state.
 	if(curr_swing_time.x == swing_time.x):
 		swing_direction.x = -1
-		velocity.x = scale_speed(swing_speed.x*swing_time.x)/2
+		velo.x = scale_speed(swing_speed.x*swing_time.x)/2
 	if(curr_swing_time.x == 0):
 		swing_direction.x = 1
-		velocity.x = -scale_speed(swing_speed.x*swing_time.x)/2
+		velo.x = -scale_speed(swing_speed.x*swing_time.x)/2
 	if(curr_swing_time.y == swing_time.y):
 		swing_direction.y = -1
-		velocity.y = scale_speed(swing_speed.y*swing_time.y)/2
+		velo.y = scale_speed(swing_speed.y*swing_time.y)/2
 	if(curr_swing_time.y == 0):
 		swing_direction.y = 1
-		velocity.y = -scale_speed(swing_speed.y*swing_time.y)/2
+		velo.y = -scale_speed(swing_speed.y*swing_time.y)/2
 	
 	curr_swing_time.x += swing_direction.x
 	curr_swing_time.y += swing_direction.y
-	velocity.x += scale_speed(swing_speed.x * swing_direction.x)
-	velocity.y += scale_speed(swing_speed.y * swing_direction.y)
+	velo.x += scale_speed(swing_speed.x * swing_direction.x)
+	velo.y += scale_speed(swing_speed.y * swing_direction.y)
 func movement_in_ground_air():
 	# Movement of player when they are in the air or on the ground. Also deals
 	# with player state changes during those times.
@@ -180,19 +182,19 @@ func movement_in_ground_air():
 		jump_animation -= 1;
 	elif is_on_floor():
 		on_ground()
-		velocity.y = 0
+		velo.y = 0
 	else:
 		in_air()
 		
 	# Horizontal Movement
-	velocity.x = hor_movement
+	velo.x = hor_movement
 	if hor_movement == 0:
-		velocity.x = 0
+		velo.x = 0
 	
 	# Vertical Movement
 	if Input.is_action_just_pressed("jump") && player_state == STATE.ONGROUND:
 		is_jump()
-	velocity.y += scale_speed(1)
+	velo.y += scale_speed(1)
 
 ################################################################################
 ############################### Action functions ###############################
@@ -206,16 +208,16 @@ func perform_action(action):
 	var action_success = false
 	# Jump Action
 	if action == ACTION.JUMP && jump_animation > 0:
-		velocity.y -= scale_speed(1.2*jump_animation/2)
+		velo.y -= scale_speed(1.2*jump_animation/2)
 		action_success = true
 
 	# Hook Action
 	if action == ACTION.HOOK:
 		# Throw out hook
 		if player_state != STATE.HOOKED:
-			hook = Hook.instance()
+			hook = Hook.instantiate()
 			add_child(hook)
-			get_node("Hook").connect("hit_detected", self, "_hook_hit_detected")
+			get_node("Hook").connect("hit_detected",Callable(self,"_hook_hit_detected"))
 			animation_frame_remainder = 15
 		# Retract hook
 		elif player_state == STATE.HOOKED:

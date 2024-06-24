@@ -1,0 +1,8 @@
+res://TestMap.tscn
+res://PlayerChar.gd
+res://TileSet.tscn
+res://Plain Block.tscn
+res://Flat Wall.tscn
+res://FlatBrick.tscn
+res://3Platform.tscn
+res://PlayerChar.tscn

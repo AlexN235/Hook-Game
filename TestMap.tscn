@@ -1,180 +1,195 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=3 uid="uid://cv6svfb12xbbl"]
 
-[ext_resource path="res://FlatBrick.tscn" type="PackedScene" id=1]
-[ext_resource path="res://PlayerChar.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Flat Wall.tscn" type="PackedScene" id=3]
-[ext_resource path="res://3Platform.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Plain Block.tscn" type="PackedScene" id=5]
-[ext_resource path="res://MoverPair.tscn" type="PackedScene" id=6]
-[ext_resource path="res://TestMap.gd" type="Script" id=7]
+[ext_resource type="PackedScene" uid="uid://1l7te13gd2qg" path="res://FlatBrick.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://te7oo01htcgl" path="res://PlayerChar.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://bnsxi3yijf2i0" path="res://Flat Wall.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://dsmjd4nd2tmba" path="res://3Platform.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://drtaokm5l4fm2" path="res://Plain Block.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://MoverPair.tscn" id="6"]
+[ext_resource type="Script" path="res://TestMap.gd" id="7"]
+[ext_resource type="PackedScene" uid="uid://cxnh7l20ecdcu" path="res://TileSet.tscn" id="8_u0ptt"]
 
 [node name="TestMap" type="Node"]
-script = ExtResource( 7 )
+script = ExtResource("7")
 
-[node name="PlayerChar" parent="." instance=ExtResource( 2 )]
-position = Vector2( 83, 80 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="PlayerChar" parent="." instance=ExtResource("2")]
+position = Vector2(83, 80)
 
 [node name="Camera2D" type="Camera2D" parent="PlayerChar"]
-current = true
-zoom = Vector2( 0.7, 0.7 )
+zoom = Vector2(2, 2)
 limit_left = 0
 limit_top = 0
-smoothing_enabled = true
 
 [node name="Area1" type="Node2D" parent="."]
-position = Vector2( 10, 10 )
+position = Vector2(8, 8)
 
 [node name="Walls" type="Node2D" parent="Area1"]
 
-[node name="Flat Wall7" parent="Area1/Walls" instance=ExtResource( 3 )]
-position = Vector2( 600, 220 )
+[node name="Flat Wall" parent="Area1/Walls" instance=ExtResource("3")]
 
-[node name="Flat Wall4" parent="Area1/Walls" instance=ExtResource( 3 )]
-position = Vector2( 0, 300 )
+[node name="Flat Wall2" parent="Area1/Walls" instance=ExtResource("3")]
+position = Vector2(0, 80)
 
-[node name="Flat Wall5" parent="Area1/Walls" instance=ExtResource( 3 )]
-position = Vector2( 600, 0 )
+[node name="Flat Wall3" parent="Area1/Walls" instance=ExtResource("3")]
+position = Vector2(0, 160)
 
-[node name="Flat Wall6" parent="Area1/Walls" instance=ExtResource( 3 )]
-position = Vector2( 600, 320 )
+[node name="Flat Wall4" parent="Area1/Walls" instance=ExtResource("3")]
+position = Vector2(0, 240)
 
-[node name="Flat Wall" parent="Area1/Walls" instance=ExtResource( 3 )]
+[node name="Flat Wall5" parent="Area1/Walls" instance=ExtResource("3")]
+position = Vector2(496, 0)
 
-[node name="Flat Wall2" parent="Area1/Walls" instance=ExtResource( 3 )]
-position = Vector2( 0, 100 )
+[node name="Flat Wall6" parent="Area1/Walls" instance=ExtResource("3")]
+position = Vector2(496, 240)
 
-[node name="Flat Wall3" parent="Area1/Walls" instance=ExtResource( 3 )]
-position = Vector2( 0, 200 )
+[node name="Flat Wall7" parent="Area1/Walls" instance=ExtResource("3")]
+position = Vector2(496, 160)
 
-[node name="Flat Brick" parent="Area1/Walls" instance=ExtResource( 1 )]
-position = Vector2( 201, -1 )
+[node name="Flat Brick" parent="Area1/Walls" instance=ExtResource("1")]
+position = Vector2(176, 0)
 
-[node name="Flat Brick2" parent="Area1/Walls" instance=ExtResource( 1 )]
-position = Vector2( 1, -1 )
+[node name="Flat Brick2" parent="Area1/Walls" instance=ExtResource("1")]
+position = Vector2(16, 0)
 
-[node name="Flat Brick3" parent="Area1/Walls" instance=ExtResource( 1 )]
-position = Vector2( 401, -1 )
+[node name="Flat Brick3" parent="Area1/Walls" instance=ExtResource("1")]
+position = Vector2(336, 0)
 
-[node name="Flat Brick4" parent="Area1/Walls" instance=ExtResource( 1 )]
-position = Vector2( 0, 400 )
+[node name="Flat Brick4" parent="Area1/Walls" instance=ExtResource("1")]
+position = Vector2(16, 304)
 
-[node name="Flat Brick5" parent="Area1/Walls" instance=ExtResource( 1 )]
-position = Vector2( 200, 400 )
+[node name="Flat Brick5" parent="Area1/Walls" instance=ExtResource("1")]
+position = Vector2(176, 304)
 
-[node name="Flat Brick6" parent="Area1/Walls" instance=ExtResource( 1 )]
-position = Vector2( 400, 400 )
+[node name="Flat Brick6" parent="Area1/Walls" instance=ExtResource("1")]
+position = Vector2(336, 304)
 
 [node name="Obstacles" type="Node2D" parent="Area1"]
 
-[node name="3Platform" parent="Area1/Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 200, 300 )
+[node name="3Platform" parent="Area1/Obstacles" instance=ExtResource("4")]
+position = Vector2(16, 240)
 
-[node name="3Platform2" parent="Area1/Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 540, 220 )
+[node name="3Platform2" parent="Area1/Obstacles" instance=ExtResource("4")]
+position = Vector2(448, 160)
 
-[node name="3Platform3" parent="Area1/Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 260, 220 )
+[node name="3Platform3" parent="Area1/Obstacles" instance=ExtResource("4")]
+position = Vector2(176, 144)
 
 [node name="Area2" type="Node2D" parent="."]
-position = Vector2( 620, 0 )
+position = Vector2(628, 8)
 
 [node name="Walls" type="Node2D" parent="Area2"]
 
 [node name="Ceiling" type="Node2D" parent="Area2/Walls"]
+position = Vector2(16, 0)
 
-[node name="Flat Brick" parent="Area2/Walls/Ceiling" instance=ExtResource( 1 )]
-position = Vector2( 10, 10 )
+[node name="Flat Brick" parent="Area2/Walls/Ceiling" instance=ExtResource("1")]
 
-[node name="Flat Brick2" parent="Area2/Walls/Ceiling" instance=ExtResource( 1 )]
-position = Vector2( 210, 10 )
+[node name="Flat Brick2" parent="Area2/Walls/Ceiling" instance=ExtResource("1")]
+position = Vector2(160, 0)
 
 [node name="Floor" type="Node2D" parent="Area2/Walls"]
+position = Vector2(16, 0)
 
-[node name="Flat Brick" parent="Area2/Walls/Floor" instance=ExtResource( 1 )]
-position = Vector2( 10, 590 )
+[node name="Flat Brick" parent="Area2/Walls/Floor" instance=ExtResource("1")]
+position = Vector2(0, 480)
 
-[node name="Flat Brick2" parent="Area2/Walls/Floor" instance=ExtResource( 1 )]
-position = Vector2( 210, 590 )
+[node name="Flat Brick2" parent="Area2/Walls/Floor" instance=ExtResource("1")]
+position = Vector2(160, 480)
 
 [node name="Left Wall" type="Node2D" parent="Area2/Walls"]
+position = Vector2(16, 0)
 
-[node name="Flat Wall" parent="Area2/Walls/Left Wall" instance=ExtResource( 3 )]
-position = Vector2( 10, 10 )
+[node name="Flat Wall" parent="Area2/Walls/Left Wall" instance=ExtResource("3")]
+position = Vector2(-16, 0)
 
-[node name="Flat Wall3" parent="Area2/Walls/Left Wall" instance=ExtResource( 3 )]
-position = Vector2( 10, 210 )
+[node name="Flat Wall2" parent="Area2/Walls/Left Wall" instance=ExtResource("3")]
+position = Vector2(-16, 160)
 
-[node name="Flat Wall4" parent="Area2/Walls/Left Wall" instance=ExtResource( 3 )]
-position = Vector2( 10, 310 )
+[node name="Flat Wall3" parent="Area2/Walls/Left Wall" instance=ExtResource("3")]
+position = Vector2(-16, 240)
 
-[node name="Flat Wall5" parent="Area2/Walls/Left Wall" instance=ExtResource( 3 )]
-position = Vector2( 10, 410 )
+[node name="Flat Wall4" parent="Area2/Walls/Left Wall" instance=ExtResource("3")]
+position = Vector2(-16, 336)
+
+[node name="Flat Wall5" parent="Area2/Walls/Left Wall" instance=ExtResource("3")]
+position = Vector2(-32, 416)
+
+[node name="Plain Block" parent="Area2/Walls/Left Wall" instance=ExtResource("5")]
+position = Vector2(-32, 400)
+
+[node name="Plain Block2" parent="Area2/Walls/Left Wall" instance=ExtResource("5")]
+position = Vector2(-16, 480)
 
 [node name="Right Wall" type="Node2D" parent="Area2/Walls"]
+position = Vector2(16, 0)
 
-[node name="Flat Wall" parent="Area2/Walls/Right Wall" instance=ExtResource( 3 )]
-position = Vector2( 390, 30 )
+[node name="Flat Wall" parent="Area2/Walls/Right Wall" instance=ExtResource("3")]
+position = Vector2(320, 0)
 
-[node name="Flat Wall2" parent="Area2/Walls/Right Wall" instance=ExtResource( 3 )]
-position = Vector2( 390, 120 )
+[node name="Flat Wall2" parent="Area2/Walls/Right Wall" instance=ExtResource("3")]
+position = Vector2(320, 80)
 
-[node name="Flat Wall3" parent="Area2/Walls/Right Wall" instance=ExtResource( 3 )]
-position = Vector2( 390, 220 )
+[node name="Flat Wall3" parent="Area2/Walls/Right Wall" instance=ExtResource("3")]
+position = Vector2(320, 160)
 
-[node name="Flat Wall4" parent="Area2/Walls/Right Wall" instance=ExtResource( 3 )]
-position = Vector2( 390, 320 )
+[node name="Flat Wall4" parent="Area2/Walls/Right Wall" instance=ExtResource("3")]
+position = Vector2(320, 240)
 
-[node name="Flat Wall5" parent="Area2/Walls/Right Wall" instance=ExtResource( 3 )]
-position = Vector2( 390, 420 )
+[node name="Flat Wall5" parent="Area2/Walls/Right Wall" instance=ExtResource("3")]
+position = Vector2(320, 336)
 
-[node name="Flat Wall6" parent="Area2/Walls/Right Wall" instance=ExtResource( 3 )]
-position = Vector2( 390, 510 )
+[node name="Flat Wall6" parent="Area2/Walls/Right Wall" instance=ExtResource("3")]
+position = Vector2(320, 416)
+
+[node name="Obstacles" type="Node" parent="Area2"]
+
+[node name="Flat Brick" parent="Area2/Obstacles" instance=ExtResource("1")]
+position = Vector2(628, 328)
+
+[node name="Flat Brick2" parent="Area2/Obstacles" instance=ExtResource("1")]
+position = Vector2(820, 328)
 
 [node name="Area3" type="Node2D" parent="."]
-position = Vector2( 0, 420 )
+position = Vector2(0, 420)
 
 [node name="Walls" type="Node2D" parent="Area3"]
 
 [node name="Ceiling" type="Node2D" parent="Area3/Walls"]
 
-[node name="Flat Brick" parent="Area3/Walls/Ceiling" instance=ExtResource( 1 )]
-position = Vector2( 10, 10 )
+[node name="Flat Brick" parent="Area3/Walls/Ceiling" instance=ExtResource("1")]
+position = Vector2(24, 8)
 
-[node name="Flat Brick2" parent="Area3/Walls/Ceiling" instance=ExtResource( 1 )]
-position = Vector2( 210, 10 )
+[node name="Flat Brick2" parent="Area3/Walls/Ceiling" instance=ExtResource("1")]
+position = Vector2(184, 8)
 
-[node name="Flat Brick3" parent="Area3/Walls/Ceiling" instance=ExtResource( 1 )]
-position = Vector2( 410, 10 )
+[node name="Flat Brick3" parent="Area3/Walls/Ceiling" instance=ExtResource("1")]
+position = Vector2(344, 8)
 
 [node name="Floor" type="Node2D" parent="Area3/Walls"]
 
-[node name="Flat Brick" parent="Area3/Walls/Floor" instance=ExtResource( 1 )]
-position = Vector2( 10, 170 )
+[node name="Flat Brick" parent="Area3/Walls/Floor" instance=ExtResource("1")]
+position = Vector2(24, 152)
 
-[node name="Flat Brick2" parent="Area3/Walls/Floor" instance=ExtResource( 1 )]
-position = Vector2( 210, 170 )
+[node name="Flat Brick2" parent="Area3/Walls/Floor" instance=ExtResource("1")]
+position = Vector2(184, 152)
 
-[node name="Flat Brick3" parent="Area3/Walls/Floor" instance=ExtResource( 1 )]
-position = Vector2( 410, 170 )
+[node name="Flat Brick3" parent="Area3/Walls/Floor" instance=ExtResource("1")]
+position = Vector2(344, 152)
 
 [node name="Left Wall" type="Node2D" parent="Area3/Walls"]
 
-[node name="Flat Wall" parent="Area3/Walls/Left Wall" instance=ExtResource( 3 )]
-position = Vector2( 10, 30 )
+[node name="Flat Wall" parent="Area3/Walls/Left Wall" instance=ExtResource("3")]
+position = Vector2(8, 8)
 
-[node name="Flat Wall2" parent="Area3/Walls/Left Wall" instance=ExtResource( 3 )]
-position = Vector2( 10, 70 )
+[node name="Flat Wall2" parent="Area3/Walls/Left Wall" instance=ExtResource("3")]
+position = Vector2(8, 88)
 
 [node name="Right Wall" type="Node2D" parent="Area3/Walls"]
 
-[node name="Flat Wall" parent="Area3/Walls/Right Wall" instance=ExtResource( 3 )]
-position = Vector2( 610, -10 )
+[node name="Flat Wall2" parent="Area3/Walls/Right Wall" instance=ExtResource("3")]
+position = Vector2(488, 24)
 
-[node name="Plain Block" parent="Area3/Walls/Right Wall" instance=ExtResource( 5 )]
-position = Vector2( 610, 170 )
-collision_mask = 2
+[node name="MoverPair" parent="." instance=ExtResource("6")]
 
-[node name="MoverPair" parent="." instance=ExtResource( 6 )]
+[node name="TileSet" parent="." instance=ExtResource("8_u0ptt")]
+layer_0/tile_data = PackedInt32Array(1245184, 262144, 10, 1245185, 327680, 10, 1245186, 65536, 10, 1245187, 786432, 9, 1245188, 65536, 10, 1245189, 983040, 9, 1245190, 655360, 9, 1245191, 0, 10, 1245192, 131072, 10, 1245193, 786432, 9, 1245194, 983040, 9, 1245195, 851968, 9, 1245196, 655360, 9, 1245197, 589824, 10, 1245198, 131072, 9, 1245199, 262144, 10, 1245200, 65536, 9, 1245201, 983040, 9, 1245202, 131072, 10, 1245203, 458752, 10, 1245204, 1114112, 9, 1245205, 1048576, 9, 1245206, 983040, 9, 1245207, 65536, 10, 1245208, 65536, 9, 1245209, 262144, 10, 1245210, 851968, 9, 1245211, 65536, 10, 1245212, 393216, 10, 1245213, 131072, 10, 1245214, 65536, 9, 1245215, 327680, 10, 983040, 393216, 10, 655391, 327680, 9, 0, 1048576, 9, 1, 0, 10, 2, 0, 10, 3, 0, 10, 4, 0, 10, 5, 0, 10, 6, 0, 10, 7, 0, 10, 8, 0, 10, 9, 0, 10, 10, 0, 10, 11, 0, 10, 12, 0, 10, 13, 0, 10, 14, 0, 10, 15, 0, 10, 16, 0, 10, 17, 0, 10, 18, 0, 10, 19, 0, 10, 20, 0, 10, 21, 0, 10, 22, 0, 10, 23, 0, 10, 24, 0, 10, 25, 0, 10, 26, 0, 10, 27, 0, 10, 28, 0, 10, 29, 0, 10, 30, 0, 10, 31, 262144, 9, 589835, 327680, 4, 589836, 458752, 4, 589837, 589824, 4, 983041, 393216, 4, 983042, 524288, 4, 983043, 589824, 4, 655390, 524288, 4, 655389, 393216, 4, 655388, 327680, 4, 1310720, 589824, 10, 1310721, 524288, 9, 1310722, 655360, 9, 1310723, 327680, 9, 1310724, 393216, 9, 1310725, 524288, 9, 1310726, 196608, 10, 1310727, 655360, 9, 1310728, 131072, 9, 1310729, 983040, 9, 1310730, 131072, 10, 1310731, 327680, 10, 1310732, 393216, 10, 1310733, 0, 10, 1310734, 458752, 10, 1310735, 458752, 9, 1310736, 131072, 10, 1310737, 262144, 10, 1310738, 1114112, 9, 1310739, 65536, 10, 1310740, 262144, 10, 1310741, 458752, 9, 1310742, 524288, 10, 1310743, 262144, 10, 1310744, 327680, 10, 1310745, 458752, 10, 1310746, 196608, 10, 1310747, 720896, 9, 1310748, 983040, 9, 1310749, 720896, 9, 1310750, 327680, 9, 1310751, 524288, 10, 1310719, 196608, 10, 1376255, 1048576, 9, 1376254, 786432, 9, 1310718, 720896, 9, 1245182, 393216, 10, 1179646, 262144, 10, 1179647, 262144, 9, 1114111, 327680, 9, 1245183, 720896, 9, 1114110, 327680, 10, 1441790, 393216, 10, 1441791, 327680, 9, 1376256, 458752, 10, 1376257, 786432, 9, 1376258, 65536, 10, 1376259, 589824, 9, 1376260, 65536, 10, 1376261, 262144, 10, 1376262, 1114112, 9, 1376263, 65536, 10, 1376264, 65536, 9, 1376265, 196608, 10, 1376266, 65536, 9, 1376267, 458752, 9, 1376268, 262144, 9, 1376269, 131072, 9, 1376270, 524288, 10, 1376271, 196608, 9, 1376272, 262144, 10, 1376273, 262144, 9, 1376274, 0, 9, 1376275, 196608, 9, 1376276, 589824, 9, 1376277, 786432, 9, 1376278, 655360, 9, 1376279, 1114112, 9, 1376280, 327680, 9, 1376281, 524288, 9, 1376282, 589824, 9, 1376283, 851968, 9, 1376284, 131072, 9, 1376285, 393216, 10, 1376286, 327680, 10, 1376287, 524288, 9, 1245216, 262144, 10, 1245217, 65536, 9, 1310753, 393216, 9, 1376289, 0, 9, 1376288, 262144, 10, 1310752, 262144, 9, 1179681, 393216, 10, 1114145, 131072, 10, 1048609, 983040, 9, 983073, 262144, 10, 917537, 458752, 10, 852001, 262144, 9, 786465, 262144, 10, 720929, 196608, 9, 655393, 0, 9, 655392, 458752, 9, 720928, 851968, 9, 786464, 1048576, 9, 852000, 262144, 10, 917536, 131072, 9, 983072, 196608, 10, 1048608, 131072, 10, 1114144, 327680, 10, 1179680, 196608, 10, 1179679, 65536, 10, 1114143, 917504, 9, 1048607, 65536, 9, 983071, 983040, 9, 917535, 196608, 9, 851999, 851968, 9, 786463, 1114112, 9, 720927, 262144, 10, 1179648, 655360, 9, 1114112, 1114112, 9, 1048576, 131072, 9, 1048575, 65536, 10, 1048574, 0, 9, 917504, 1114112, 9, 851968, 917504, 9, 786432, 786432, 9, 720896, 131072, 10, 655360, 524288, 10, 589824, 65536, 10, 524288, 458752, 10, 458752, 589824, 9, 393216, 262144, 10, 327680, 1048576, 9, 262144, 327680, 9, 196608, 786432, 9, 131072, 65536, 9, 65536, 458752, 10, 65535, 262144, 10, 131071, 65536, 9, 196607, 458752, 10, 262143, 524288, 10, 327679, 786432, 9, 327678, 0, 10, 393214, 196608, 9, 458750, 393216, 9, 524286, 786432, 9, 524287, 65536, 10, 589823, 196608, 10, 655359, 131072, 9, 720895, 524288, 10, 786431, 196608, 9, 851967, 65536, 9, 917503, 0, 9, 983039, 1048576, 9, 983038, 196608, 10, 917502, 655360, 9, 851966, 524288, 10, 786430, 720896, 9, 720894, 524288, 9, 655358, 131072, 10, 589822, 131072, 10, 393215, 65536, 10, 458751, 917504, 9, 262142, 65536, 9, 196606, 131072, 10, 131070, 0, 10, 65534, 720896, 9, 65567, 524288, 10, 131103, 131072, 9, 196639, 1048576, 9, 262175, 524288, 9, 262176, 1048576, 9, 196640, 458752, 10, 131104, 655360, 9, 65568, 262144, 9, 32, 524288, 9, 33, 196608, 9, 65569, 1114112, 9, 131105, 720896, 9, 196641, 262144, 10, 262177, 1048576, 9, -65503, 327680, 9, -131039, 0, 10, -131040, 65536, 9, -131041, 327680, 10, -131042, 131072, 10, -131043, 393216, 9, -131044, 458752, 10, -131045, 589824, 10, -131046, 458752, 9, -131047, 983040, 9, -131048, 983040, 9, -131049, 327680, 10, -131050, 458752, 9, -131051, 786432, 9, -131052, 524288, 9, -131053, 262144, 10, -131054, 327680, 9, -131055, 851968, 9, -131056, 327680, 9, -131057, 458752, 9, -131058, 1114112, 9, -131059, 393216, 10, -131060, 65536, 9, -131061, 0, 9, -131062, 655360, 9, -131063, 196608, 9, -131064, 327680, 9, -131065, 0, 10, -131066, 1114112, 9, -131067, 655360, 9, -131068, 196608, 9, -131069, 65536, 10, -131070, 131072, 10, -131071, 589824, 9, -131072, 327680, 10, -65537, 262144, 9, -65538, 393216, 9, -2, 196608, 9, -1, 458752, 9, -65536, 131072, 9, -65535, 655360, 9, -65534, 0, 9, -65533, 65536, 9, -65532, 327680, 9, -65531, 65536, 9, -65530, 393216, 9, -65529, 851968, 9, -65528, 786432, 9, -65527, 589824, 10, -65526, 0, 10, -65525, 65536, 9, -65524, 393216, 9, -65523, 65536, 9, -65522, 589824, 10, -65521, 589824, 10, -65520, 458752, 10, -65519, 786432, 9, -65518, 65536, 10, -65517, 327680, 9, -65516, 65536, 9, -65515, 65536, 10, -65514, 0, 10, -65513, 524288, 10, -65512, 1114112, 9, -65511, 196608, 10, -65510, 262144, 10, -65509, 720896, 9, -65508, 589824, 9, -65507, 720896, 9, -65506, 458752, 10, -65505, 393216, 9, -65504, 262144, 10, 65556, 131072, 2, 65554, 0, 2, 65555, 65536, 2)
