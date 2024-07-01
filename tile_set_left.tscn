@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://bcfgdyamo7qmf"]
+
+[ext_resource type="Texture2D" uid="uid://xepugh4bdgf0" path="res://imported assets/Environment/stringstar fields/tileset.png" id="1_yqi3w"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_612n6"]
+texture = ExtResource("1_yqi3w")
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+4:9/0 = 0
+5:9/0 = 0
+6:9/0 = 0
+7:9/0 = 0
+8:9/0 = 0
+9:9/0 = 0
+10:9/0 = 0
+11:9/0 = 0
+12:9/0 = 0
+13:9/0 = 0
+14:9/0 = 0
+15:9/0 = 0
+16:9/0 = 0
+17:9/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+2:10/0 = 0
+3:10/0 = 0
+4:10/0 = 0
+5:10/0 = 0
+6:10/0 = 0
+7:10/0 = 0
+8:10/0 = 0
+9:10/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_53dym"]
+sources/0 = SubResource("TileSetAtlasSource_612n6")
+
+[node name="TileSetLeft" type="TileMap"]
+rotation = 4.71239
+tile_set = SubResource("TileSet_53dym")
+format = 2

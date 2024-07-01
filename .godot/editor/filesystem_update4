@@ -6,3 +6,6 @@ res://Flat Wall.tscn
 res://FlatBrick.tscn
 res://3Platform.tscn
 res://PlayerChar.tscn
+res://tile_set_right.tscn
+res://tile_set_down.tscn
+res://tile_set_left.tscn

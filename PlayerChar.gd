@@ -13,6 +13,7 @@ var dash_cd : int
 var animation_frame_remainder : int
 var hor_movement : int
 var jump_animation : int
+@onready var animation = $Sprite2D/animation
 
 # Swing stats
 var swing_time : Vector2
@@ -45,6 +46,8 @@ func _draw():
 func _process(delta):
 	# Camera3D
 	var cam = get_node("Camera2D")
+	
+	animation.play("idle");
 	
 	hor_movement = right() - left() + dash_boost()
 	
