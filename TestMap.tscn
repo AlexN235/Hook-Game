@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bnsxi3yijf2i0" path="res://Flat Wall.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://dsmjd4nd2tmba" path="res://3Platform.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://drtaokm5l4fm2" path="res://Plain Block.tscn" id="5"]
-[ext_resource type="PackedScene" path="res://MoverPair.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://cxnesg1t06178" path="res://MoverPair.tscn" id="6"]
 [ext_resource type="Script" path="res://TestMap.gd" id="7"]
 [ext_resource type="PackedScene" uid="uid://cxnh7l20ecdcu" path="res://TileSet.tscn" id="8_u0ptt"]
 [ext_resource type="PackedScene" uid="uid://dr4q5pqaxmnwm" path="res://tile_set_right.tscn" id="9_gmjy8"]

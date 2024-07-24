@@ -10,10 +10,12 @@ var speed : int
 var player_direction : int
 var dash_timer : int
 var dash_cd : int
-var animation_frame_remainder : int
 var hor_movement : int
 var jump_animation : int
+var mouse_position : Vector2
 @onready var animation = $Sprite2D/animation
+var rope_length
+var hook_point
 
 # Swing stats
 var swing_time : Vector2
@@ -62,6 +64,7 @@ func _process(delta):
 	
 	## Actions with semi-locked animations.
 	if Input.is_action_just_pressed("hook"):
+		mouse_position = get_global_mouse_position()
 		buffer = ACTION.HOOK
 		set_buffer_timer()
 	## Actions with no locked animations.
@@ -73,19 +76,18 @@ func _process(delta):
 	var act = perform_action(get_next_action())
 	if act == true:
 		buffer = null
-	
-	## Animation lock checker (only used for hook animation)
-	if animation_frame_remainder > 0:
-		animation_frame_remainder -= 1
-		in_animation()
-		if animation_frame_remainder == 0 && hit_occured:
-			is_hooked()
+
+#
+#	## Animation lock checker (only used for hook animation)
+#	if animation_frame_remainder > 0:
+#		animation_frame_remainder -= 1
+#		in_animation()
+#		if animation_frame_remainder == 0 && hit_occured:
+#			is_hooked()
 	
 	# timers
 	if dash_timer > 0:
 		dash_timer -= 1
-	if(buffer_timer > 0):
-		buffer_timer -= 1
 	elif(buffer_timer == 0):
 		buffer = null
 	
@@ -110,10 +112,6 @@ func in_air():
 	player_state = STATE.INAIR
 func is_hooked():
 	player_state = STATE.HOOKED
-	curr_swing_time.x = int(sqrt(pow(swing_time.x, 2))/2)
-	curr_swing_time.y = int(sqrt(pow(swing_time.y, 2))/2)
-	swing_direction.y = 1
-	swing_direction.x = player_direction
 func is_jump():
 	player_state = STATE.JUMP
 	jump_animation = 10
@@ -138,44 +136,29 @@ func dash_boost():
 func scale_speed(i : float):
 	# speed of objects all scaled by this function.
 	return i * speed
-func _hook_hit_detected(hit_location):
-	var dist : Vector2
-	var angle = global_position.angle_to_point(hit_location)
-	var h = global_position.distance_to(hit_location)
+func hook_hit_detected(hit_location):
+	hook_point = hit_location
+	var player_location : Vector2
 	
-	# calculated distance of player to hit location.
-	dist.y = h - (h * sin(angle))
-	dist.x = abs(hit_location.x - global_position.x)
+	player_location = global_position
+	rope_length = global_position.distance_to(hit_location)
+	player_state = STATE.HOOKED
 	
-	# determine swinging speed to simulate pendulum effect.
-	swing_speed.x = get_swinging_acceleration(dist.x, swing_time.x) 
-	swing_speed.y = get_swinging_acceleration(dist.y, swing_time.y) 
+func hook_findind_wall(player_pos : Vector2, mouse_pos : Vector2):
+	var angle = player_pos.angle_to_point(mouse_pos)
+	## Find wall along path from player to a certain distance
 	
-	hit_occured = true
-	hook_line = hit_location ## TEMP
-func get_swinging_acceleration(length : float, time : float): 
-	# determine the acceleration needed for player to have a pendulum effect.
-	var a = (2*length)/(time*time)
-	return a*speed
 func movement_in_hooked():
 	# Player's movement during the 'hooked' state.
-	if(curr_swing_time.x == swing_time.x):
-		swing_direction.x = -1
-		velo.x = scale_speed(swing_speed.x*swing_time.x)/2
-	if(curr_swing_time.x == 0):
-		swing_direction.x = 1
-		velo.x = -scale_speed(swing_speed.x*swing_time.x)/2
-	if(curr_swing_time.y == swing_time.y):
-		swing_direction.y = -1
-		velo.y = scale_speed(swing_speed.y*swing_time.y)/2
-	if(curr_swing_time.y == 0):
-		swing_direction.y = 1
-		velo.y = -scale_speed(swing_speed.y*swing_time.y)/2
+	if abs(global_position.distance_to(hook_point)) > rope_length:
+		velo = Vector2.ZERO
+
+func determine_hook_end():
+	# hook_point
+	# rope_length
 	
-	curr_swing_time.x += swing_direction.x
-	curr_swing_time.y += swing_direction.y
-	velo.x += scale_speed(swing_speed.x * swing_direction.x)
-	velo.y += scale_speed(swing_speed.y * swing_direction.y)
+	pass
+
 func movement_in_ground_air():
 	# Movement of player when they are in the air or on the ground. Also deals
 	# with player state changes during those times.
@@ -218,10 +201,10 @@ func perform_action(action):
 	if action == ACTION.HOOK:
 		# Throw out hook
 		if player_state != STATE.HOOKED:
-			hook = Hook.instantiate()
-			add_child(hook)
-			get_node("Hook").connect("hit_detected",Callable(self,"_hook_hit_detected"))
-			animation_frame_remainder = 15
+			## Call Map to instantiate hook.
+			var map = get_parent()
+			map.create_hook(global_position, mouse_position)
+			
 		# Retract hook
 		elif player_state == STATE.HOOKED:
 			in_air()

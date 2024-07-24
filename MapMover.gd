@@ -11,4 +11,5 @@ func _ready():
 #	pass
 
 func _on_MapMover_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	print("hi")
 	emit_signal("hit_detected")

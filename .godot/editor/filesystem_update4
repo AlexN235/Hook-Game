@@ -9,3 +9,11 @@ res://PlayerChar.tscn
 res://tile_set_right.tscn
 res://tile_set_down.tscn
 res://tile_set_left.tscn
+res://TestMap.gd
+res://MoverPair.tscn
+res://MoverPair.gd
+res://MapMover.tscn
+res://MapMoverExit.tscn
+res://MapMover.gd
+res://Hook.tscn
+res://Hook.gd
