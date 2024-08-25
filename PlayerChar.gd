@@ -16,6 +16,7 @@ var mouse_position : Vector2
 @onready var animation = $Sprite2D/animation
 var rope_length
 var hook_point
+var OutOfRange : bool
 
 # Swing stats
 var swing_time : Vector2
@@ -61,6 +62,7 @@ func _process(delta):
 		movement_in_hooked()
 	else:
 		movement_in_ground_air()
+	velo.y += scale_speed(1)
 	
 	## Actions with semi-locked animations.
 	if Input.is_action_just_pressed("hook"):
@@ -142,20 +144,41 @@ func hook_hit_detected(hit_location):
 	
 	player_location = global_position
 	rope_length = global_position.distance_to(hit_location)
+	
 	player_state = STATE.HOOKED
 	
-func hook_findind_wall(player_pos : Vector2, mouse_pos : Vector2):
+func hook_finding_wall(player_pos : Vector2, mouse_pos : Vector2):
 	var angle = player_pos.angle_to_point(mouse_pos)
 	## Find wall along path from player to a certain distance
 	
 func movement_in_hooked():
 	# Player's movement during the 'hooked' state.
-	if abs(global_position.distance_to(hook_point)) > rope_length:
-		velo = Vector2.ZERO
+	
+	## TO DO:
+	# 1. Swing works for south quadrant but fails in west, east. Try dealing 
+	# with movement and momentum by quadrants
+	# 2. Player controlled left and right movement
+	
+	OutOfRange = abs(global_position.distance_to(hook_point)) > rope_length
+	if OutOfRange:
+		var ang = global_position.angle_to_point(hook_point)
+		# Keeping player within rope length
+		var new_pos = Vector2(rope_length, 0)
+		new_pos = new_pos.rotated(ang+PI)
+		global_position = hook_point + new_pos
+		#velo.y = 0
+		
+		# Velocity/Momentum
+		var new_velo_y = Vector2(velo.y, 0).rotated(ang)
+		new_velo_y.y = new_velo_y.x/10
+		velo.y = 0
+		print(velo, " : ", new_velo_y, " :: ", global_position)
+		velo += new_velo_y
+		
 
 func determine_hook_end():
-	# hook_point
-	# rope_length
+	hook_point
+	rope_length
 	
 	pass
 
@@ -180,7 +203,7 @@ func movement_in_ground_air():
 	# Vertical Movement
 	if Input.is_action_just_pressed("jump") && player_state == STATE.ONGROUND:
 		is_jump()
-	velo.y += scale_speed(1)
+	
 
 ################################################################################
 ############################### Action functions ###############################
