@@ -99,6 +99,9 @@ func _process(delta):
 	if hor_movement < 0:
 		player_direction = -1
 
+	# player velocity limit
+	limit_velocity()
+	
 	set_velocity(velo)
 	set_up_direction(Vector2.UP)
 	move_and_slide()
@@ -138,6 +141,21 @@ func dash_boost():
 func scale_speed(i : float):
 	# speed of objects all scaled by this function.
 	return i * speed
+func limit_velocity():
+	var horizontal_limit = 300 
+	var verticle_limit = 300
+	
+	if(velo.x > horizontal_limit):
+		velo.x = horizontal_limit
+	elif(velo.x < -horizontal_limit):
+		velo.x = -horizontal_limit
+	
+	if(velo.y > verticle_limit):
+		velo.y = verticle_limit
+	elif(velo.y < -verticle_limit*2):
+		velo.y = -verticle_limit*2
+		
+	
 func hook_hit_detected(hit_location):
 	hook_point = hit_location
 	var player_location : Vector2
@@ -174,6 +192,12 @@ func movement_in_hooked():
 		velo.y = 0
 		print(velo, " : ", new_velo_y, " :: ", global_position)
 		velo += new_velo_y
+		
+		# Player Movement
+		var velo_ang = PI/2 - ang
+		var velo_change = Vector2(-hor_movement/10, 0).rotated(velo_ang)
+		
+		velo += velo_change
 		
 
 func determine_hook_end():

@@ -1,7 +1,6 @@
-res://Plain Block.tscn
-res://TestMap.gd
-res://PlayerChar.gd
 res://TestMap.tscn
+res://TestMap.gd
+res://Plain Block.tscn
 res://Flat Wall.tscn
 res://FlatBrick.tscn
 res://3Platform.tscn
@@ -10,3 +9,4 @@ res://MoverPair.tscn
 res://MapMover.tscn
 res://MapMoverExit.tscn
 res://Hook.tscn
+res://PlayerChar.gd
