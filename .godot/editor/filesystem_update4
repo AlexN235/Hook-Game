@@ -1,12 +1,16 @@
-res://TestMap.tscn
+res://MapMover.tscn
 res://TestMap.gd
+res://MapMover.cs
+res://MapMoverExit.gd
+res://MapMoverExit.tscn
+res://MapMoverExit.cs
+res://TestMap.tscn
 res://Plain Block.tscn
 res://Flat Wall.tscn
 res://FlatBrick.tscn
 res://3Platform.tscn
 res://PlayerChar.tscn
 res://MoverPair.tscn
-res://MapMover.tscn
-res://MapMoverExit.tscn
 res://Hook.tscn
-res://PlayerChar.gd
+res://MoverPair.gd
+res://MoverPair.cs

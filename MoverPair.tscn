@@ -1,11 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://cxnesg1t06178"]
 
 [ext_resource type="PackedScene" uid="uid://so3ghlywmran" path="res://MapMover.tscn" id="1"]
+[ext_resource type="Script" path="res://MoverPair.cs" id="1_1s31a"]
 [ext_resource type="PackedScene" uid="uid://rrlqkxqaon45" path="res://MapMoverExit.tscn" id="2"]
-[ext_resource type="Script" path="res://MoverPair.gd" id="3"]
 
 [node name="MoverPair" type="Node2D"]
-script = ExtResource("3")
+script = ExtResource("1_1s31a")
 
 [node name="MapMover" parent="." instance=ExtResource("1")]
 

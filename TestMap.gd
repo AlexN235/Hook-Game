@@ -1,6 +1,7 @@
 extends Node
 
 var Hook = preload("res://Hook.tscn")
+var mover = load("res://MoverPair.cs")
 
 var portal
 var hook

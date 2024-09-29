@@ -1,5 +1,7 @@
 extends Node2D
 
+
+
 var player
 var entrance 
 var exit

@@ -1,0 +1,18 @@
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\bin\Debug\Hook Game.deps.json
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\bin\Debug\Hook Game.runtimeconfig.json
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\bin\Debug\Hook Game.dll
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\bin\Debug\Hook Game.pdb
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\bin\Debug\GodotSharp.dll
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\bin\Debug\GodotSharpEditor.dll
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\obj\Debug\Hook Game.csproj.AssemblyReference.cache
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\obj\Debug\Hook Game.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\obj\Debug\Hook Game.AssemblyInfoInputs.cache
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\obj\Debug\Hook Game.AssemblyInfo.cs
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\obj\Debug\Hook Game.csproj.CoreCompileInputs.cache
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\obj\Debug\Hook Game.sourcelink.json
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\obj\Debug\Hook Game.csproj.Up2Date
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\obj\Debug\Hook Game.dll
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\obj\Debug\refint\Hook Game.dll
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\obj\Debug\Hook Game.pdb
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\obj\Debug\Hook Game.genruntimeconfig.cache
+C:\Users\alexn\Desktop\Godot Projects\Hook Game\.godot\mono\temp\obj\Debug\ref\Hook Game.dll

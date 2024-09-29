@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hook Game", "Hook Game.csproj", "{ACBB9C03-7500-4167-A794-68502CC128B7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACBB9C03-7500-4167-A794-68502CC128B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACBB9C03-7500-4167-A794-68502CC128B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACBB9C03-7500-4167-A794-68502CC128B7}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{ACBB9C03-7500-4167-A794-68502CC128B7}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{ACBB9C03-7500-4167-A794-68502CC128B7}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{ACBB9C03-7500-4167-A794-68502CC128B7}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91E1FC4B-8804-4393-AC17-CFA92EA208F4}
+	EndGlobalSection
+EndGlobal
