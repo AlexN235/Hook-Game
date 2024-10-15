@@ -4,6 +4,7 @@ using System;
 
 public partial class MoverPair : Node2D
 {
+	/* 
 	Object player, entrance, exit;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -33,4 +34,5 @@ public partial class MoverPair : Node2D
 		Console.WriteLine("hitting node#");
 		player.SetGlobalPosition(exit.GlobalPosition);
 	}
+	*/
 }

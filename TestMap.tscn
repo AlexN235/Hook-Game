@@ -1,19 +1,19 @@
 [gd_scene load_steps=12 format=3 uid="uid://1u8c8t85rn62"]
 
 [ext_resource type="PackedScene" uid="uid://1l7te13gd2qg" path="res://FlatBrick.tscn" id="1"]
+[ext_resource type="Script" path="res://TestMap.cs" id="1_j256y"]
 [ext_resource type="PackedScene" uid="uid://te7oo01htcgl" path="res://PlayerChar.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://bnsxi3yijf2i0" path="res://Flat Wall.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://dsmjd4nd2tmba" path="res://3Platform.tscn" id="4"]
 [ext_resource type="PackedScene" uid="uid://drtaokm5l4fm2" path="res://Plain Block.tscn" id="5"]
 [ext_resource type="PackedScene" uid="uid://cxnesg1t06178" path="res://MoverPair.tscn" id="6"]
-[ext_resource type="Script" path="res://TestMap.gd" id="7"]
 [ext_resource type="PackedScene" uid="uid://cxnh7l20ecdcu" path="res://TileSet.tscn" id="8_u0ptt"]
 [ext_resource type="PackedScene" uid="uid://dr4q5pqaxmnwm" path="res://tile_set_right.tscn" id="9_gmjy8"]
 [ext_resource type="PackedScene" uid="uid://cv513sbte36r4" path="res://tile_set_down.tscn" id="10_r2lbb"]
 [ext_resource type="PackedScene" uid="uid://bcfgdyamo7qmf" path="res://tile_set_left.tscn" id="11_dco0f"]
 
 [node name="TestMap" type="Node"]
-script = ExtResource("7")
+script = ExtResource("1_j256y")
 
 [node name="PlayerChar" parent="." instance=ExtResource("2")]
 position = Vector2(83, 80)

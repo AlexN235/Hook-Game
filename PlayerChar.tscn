@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://te7oo01htcgl"]
 
-[ext_resource type="Script" path="res://PlayerChar.gd" id="1"]
+[ext_resource type="Script" path="res://PlayerChar.cs" id="1_ehf8g"]
 [ext_resource type="Texture2D" uid="uid://cboqi2vmp8r5n" path="res://imported assets/Character/Enchantress/enchantress combined basic.png" id="2_yp1xs"]
 
 [sub_resource type="RectangleShape2D" id="1"]
@@ -151,7 +151,7 @@ _data = {
 
 [node name="PlayerChar" type="CharacterBody2D"]
 collision_layer = 2
-script = ExtResource("1")
+script = ExtResource("1_ehf8g")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 1)
