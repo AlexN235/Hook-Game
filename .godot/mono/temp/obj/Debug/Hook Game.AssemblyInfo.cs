@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Hook Game")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+72e65702707d5450d01c4d573bd95c52e50c8f65")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a29ad4d89e1f44774c0fe743cb48e6ac0315afed")]
 [assembly: System.Reflection.AssemblyProductAttribute("Hook Game")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Hook Game")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
