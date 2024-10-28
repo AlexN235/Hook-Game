@@ -28,7 +28,7 @@ public partial class PlayerChar : CharacterBody2D
 	public PlayerChar() {
 		player_state = PlayerState.Normal;
 		charging_counter = 0;
-		max_charging_counter = 40;
+		max_charging_counter = 120;
 		charge_level = 0;
 		max_charge_level = 4;
 		rocket_counter = 0;
@@ -47,7 +47,6 @@ public partial class PlayerChar : CharacterBody2D
 		prev_state = player_state;
 		switch (player_state)
 		{
-			
 			case PlayerState.Normal:
 				// Add the gravity.
 				if (!IsOnFloor())
@@ -60,9 +59,34 @@ public partial class PlayerChar : CharacterBody2D
 				// Get the input direction and handle the movement/deceleration.
 				// As good practice, you should replace UI actions with custom gameplay actions.
 				Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-				if (direction != Vector2.Zero)
+				if (direction != Vector2.Zero && !IsOnFloor()) 
+				{
+					if (velocity.X * direction.X < 0)
+					{
+						velocity.X = -velocity.X;
+					}
+				}
+				else if (direction != Vector2.Zero)
 				{
 					velocity.X = direction.X * Speed;
+				}
+				else if (direction == Vector2.Zero && !IsOnFloor()) 
+				{
+					// Slow down in the air if holding nothing.
+					float newX = velocity.X;
+					if (newX < 5 && newX > -5)
+					{
+						newX = 0;
+					}
+					else if (newX > 0)
+					{ 
+						newX -= 5;
+					}
+					else
+					{
+						newX += 5;
+					}
+					velocity.X = Mathf.MoveToward(Velocity.X, newX, Speed);
 				}
 				else
 				{
@@ -80,12 +104,12 @@ public partial class PlayerChar : CharacterBody2D
 				else if (rocket_counter == 1) 
 				{
 					rocket_counter--;
-					velocity.Y = Mathf.MoveToward(-velocity.Y, 0, Speed);
+					velocity.Y = Mathf.MoveToward(velocity.Y, 0, Speed);
 				}
 				else if (rocket_counter > 1)
 				{
 					rocket_counter--;
-					velocity.Y = -5 * Speed;
+					velocity.Y = -2 * Speed;
 				}
 				break;
 		}
@@ -104,9 +128,11 @@ public partial class PlayerChar : CharacterBody2D
 		{
 			player_state = PlayerState.Rocket;
 		}
-		else if (Input.IsActionPressed("move_down"))
+		else if (Input.IsActionPressed("move_down") && IsOnFloor())
 		{
 			player_state = PlayerState.Charge;
+			velocity.Y = Mathf.MoveToward(velocity.Y, 0, Speed);
+			velocity.X = Mathf.MoveToward(velocity.X, 0, Speed);
 		}
 		else
 		{
@@ -117,7 +143,7 @@ public partial class PlayerChar : CharacterBody2D
 		if (player_state == PlayerState.Normal && prev_state == PlayerState.Charge)
 		 {
 			player_state = PlayerState.Rocket;
-			rocket_counter = 10;
+			rocket_counter = 2 * (charging_counter / 10);
 			charging_counter = 0;
 		}
 		Velocity = velocity;

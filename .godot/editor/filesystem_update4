@@ -1,6 +1,4 @@
-res://MapMoverExit.tscn
-res://game_header.h
-res://PlayerChar.cs
+res://Hook.tscn
 res://TestMap.tscn
 res://Plain Block.tscn
 res://Flat Wall.tscn
@@ -9,4 +7,5 @@ res://3Platform.tscn
 res://PlayerChar.tscn
 res://MoverPair.tscn
 res://MapMover.tscn
-res://Hook.tscn
+res://MapMoverExit.tscn
+res://PlayerChar.cs
