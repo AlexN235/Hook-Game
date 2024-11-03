@@ -1,7 +1,12 @@
 using Godot;
 using System;
 
-enum PlayerState {Normal, Charge, Rocket}
+namespace Helper 
+{
+	
+}
+
+public enum PlayerState {Normal, Charge, Rocket}
 
 public partial class PlayerChar : CharacterBody2D
 {
@@ -19,13 +24,18 @@ public partial class PlayerChar : CharacterBody2D
 	int max_charge_level;
 	int rocket_counter;
 	
-	PackedScene _hook = (PackedScene)GD.Load("res://Hook.tscn");
+	float rocket_angle;
+
+	private PackedScene _hook = (PackedScene)GD.Load("res://Hook.tscn");
 	private TestMap _TestMap;
+	
+	
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
-	public PlayerChar() {
+	public PlayerChar() 
+	{
 		player_state = PlayerState.Normal;
 		charging_counter = 0;
 		max_charging_counter = 120;
@@ -34,7 +44,8 @@ public partial class PlayerChar : CharacterBody2D
 		rocket_counter = 0;
 	}
 	
-	public override void _Ready() {
+	public override void _Ready() 
+	{
 		_TestMap = GetNode<TestMap>("TestMap");
 		map = this.GetParent();
 	}
@@ -42,8 +53,6 @@ public partial class PlayerChar : CharacterBody2D
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector2 velocity = Velocity;
-		
-		GD.Print(charging_counter);
 		prev_state = player_state;
 		switch (player_state)
 		{
@@ -99,20 +108,24 @@ public partial class PlayerChar : CharacterBody2D
 					charging_counter++;
 				break;
 			case PlayerState.Rocket:
+				Vector2 rocket_accel = new Vector2(3, 0).Rotated(rocket_angle);
 				if (rocket_counter == 0)
 					player_state = PlayerState.Normal;
 				else if (rocket_counter == 1) 
 				{
 					rocket_counter--;
 					velocity.Y = Mathf.MoveToward(velocity.Y, 0, Speed);
+					velocity.X = Mathf.MoveToward(velocity.X, 0, Speed);
 				}
 				else if (rocket_counter > 1)
 				{
 					rocket_counter--;
-					velocity.Y = -2 * Speed;
+					velocity = rocket_accel * Speed;
 				}
 				break;
 		}
+		
+		// Handle State Change.
 		
 		// Handle hook
 		if (Input.IsActionJustPressed("hook")) 
@@ -123,12 +136,12 @@ public partial class PlayerChar : CharacterBody2D
 			((TestMap)map).createHook(playerPos, mousePos);
 		}
 		
-		// Handle Charge
-		if (player_state == PlayerState.Rocket) // Rocket has priority over lower states.
+		// Handle charge
+		if (checkRocketCondtion()) // Rocket has priority over lower states.
 		{
 			player_state = PlayerState.Rocket;
 		}
-		else if (Input.IsActionPressed("move_down") && IsOnFloor())
+		else if (checkChargeCondition())
 		{
 			player_state = PlayerState.Charge;
 			velocity.Y = Mathf.MoveToward(velocity.Y, 0, Speed);
@@ -139,10 +152,11 @@ public partial class PlayerChar : CharacterBody2D
 			player_state = PlayerState.Normal;
 		}
 		
-		// Handle State Change.
+		// Handle rocket
 		if (player_state == PlayerState.Normal && prev_state == PlayerState.Charge)
 		 {
 			player_state = PlayerState.Rocket;
+			rocket_angle = this.GetNode<VisualPlayerArrow>("VisualPlayerArrow").getLaunchAngle();
 			rocket_counter = 2 * (charging_counter / 10);
 			charging_counter = 0;
 		}
@@ -150,9 +164,32 @@ public partial class PlayerChar : CharacterBody2D
 		MoveAndSlide();
 		
 	}
-	
-	private static class HelperFunctions {
 		
-	}
-	
+		/* ################################## Helper Functions ################################## */
+		private bool checkChargeConditionMet() 
+		{
+			return Input.IsActionPressed("move_down") && IsOnFloor();
+		}
+		private bool checkRocketCondtionMet()
+		{
+			return player_state == PlayerState.Rocket;
+		}
+		
+		public class StateHelper
+		{
+			// State Checkers
+			public static bool isInRocketState(PlayerState state)
+			{
+				return state == PlayerState.Rocket;
+			}
+			public static bool isInChargeState(PlayerState state)
+			{
+				return state == PlayerState.Charge;
+			}
+			public static bool isInNormalState(PlayerState state)
+			{
+				return state == PlayerState.Normal;
+			}
+		}
+
 }

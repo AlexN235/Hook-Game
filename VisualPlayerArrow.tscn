@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://becpq04v84mav"]
+
+[ext_resource type="Script" path="res://VisualPlayerArrow.cs" id="1_0t6bj"]
+
+[node name="VisualPlayerArrow" type="Node2D"]
+script = ExtResource("1_0t6bj")
+
+[node name="ArrowShape" type="Polygon2D" parent="."]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(-2, -2, -2, 0, 2, -1)

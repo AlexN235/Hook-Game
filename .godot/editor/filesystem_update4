@@ -1,4 +1,5 @@
-res://Hook.tscn
+res://VisualPlayerArrow.tscn
+res://VisualPlayerArrow.cs
 res://TestMap.tscn
 res://Plain Block.tscn
 res://Flat Wall.tscn
@@ -8,4 +9,5 @@ res://PlayerChar.tscn
 res://MoverPair.tscn
 res://MapMover.tscn
 res://MapMoverExit.tscn
+res://Hook.tscn
 res://PlayerChar.cs

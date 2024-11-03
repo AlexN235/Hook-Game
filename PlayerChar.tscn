@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://te7oo01htcgl"]
+[gd_scene load_steps=14 format=3 uid="uid://te7oo01htcgl"]
 
 [ext_resource type="Script" path="res://PlayerChar.cs" id="1_ehf8g"]
 [ext_resource type="Texture2D" uid="uid://cboqi2vmp8r5n" path="res://imported assets/Character/Enchantress/enchantress combined basic.png" id="2_yp1xs"]
+[ext_resource type="PackedScene" uid="uid://becpq04v84mav" path="res://VisualPlayerArrow.tscn" id="3_bi23g"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(5, 12)
@@ -171,3 +172,5 @@ speed_scale = 4.0
 libraries = {
 "": SubResource("AnimationLibrary_p2rsj")
 }
+
+[node name="VisualPlayerArrow" parent="." instance=ExtResource("3_bi23g")]
