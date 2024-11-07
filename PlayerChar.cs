@@ -68,18 +68,18 @@ public partial class PlayerChar : CharacterBody2D
 				// Get the input direction and handle the movement/deceleration.
 				// As good practice, you should replace UI actions with custom gameplay actions.
 				Vector2 direction = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-				if (direction != Vector2.Zero && !IsOnFloor()) 
+				if (direction.X != 0 && !IsOnFloor()) 
 				{
 					if (velocity.X * direction.X < 0)
 					{
-						velocity.X = -velocity.X;
+						velocity.X = -velocity.X/2;
 					}
 				}
-				else if (direction != Vector2.Zero)
+				else if (direction != Vector2.Zero && IsOnFloor())
 				{
 					velocity.X = direction.X * Speed;
 				}
-				else if (direction == Vector2.Zero && !IsOnFloor()) 
+				else if (!IsOnFloor()) 
 				{
 					// Slow down in the air if holding nothing.
 					float newX = velocity.X;
@@ -106,6 +106,8 @@ public partial class PlayerChar : CharacterBody2D
 				// Charge missile jump
 				if(charging_counter < max_charging_counter)
 					charging_counter++;
+				velocity.Y = Mathf.MoveToward(velocity.Y, 0, Speed);
+				velocity.X = Mathf.MoveToward(velocity.X, 0, Speed);
 				break;
 			case PlayerState.Rocket:
 				Vector2 rocket_accel = new Vector2(3, 0).Rotated(rocket_angle);
@@ -125,54 +127,54 @@ public partial class PlayerChar : CharacterBody2D
 				break;
 		}
 		
-		// Handle State Change.
-		
-		// Handle hook
-		if (Input.IsActionJustPressed("hook")) 
-		{
-			Vector2 playerPos, mousePos;
-			playerPos = GlobalPosition;
-			mousePos = GetViewport().GetMousePosition();
-			((TestMap)map).createHook(playerPos, mousePos);
-		}
-		
-		// Handle charge
-		if (checkRocketCondtion()) // Rocket has priority over lower states.
+		// Handle State Changes.
+		if (isInRocketState()) 
 		{
 			player_state = PlayerState.Rocket;
 		}
-		else if (checkChargeCondition())
+		else if (checkChargeConditionMet())
 		{
-			player_state = PlayerState.Charge;
-			velocity.Y = Mathf.MoveToward(velocity.Y, 0, Speed);
-			velocity.X = Mathf.MoveToward(velocity.X, 0, Speed);
+			playerIsChargingJump();
 		}
-		else
+		else if (checkRocketConditionMet())
 		{
+			changeToRocket();
+		}
+		else // default/normal state.
+		{
+			// change to normal state (doing nothing state) if no other state.
 			player_state = PlayerState.Normal;
-		}
-		
-		// Handle rocket
-		if (player_state == PlayerState.Normal && prev_state == PlayerState.Charge)
-		 {
-			player_state = PlayerState.Rocket;
-			rocket_angle = this.GetNode<VisualPlayerArrow>("VisualPlayerArrow").getLaunchAngle();
-			rocket_counter = 2 * (charging_counter / 10);
-			charging_counter = 0;
 		}
 		Velocity = velocity;
 		MoveAndSlide();
-		
 	}
 		
-		/* ################################## Helper Functions ################################## */
+		/* ################################## ----------- ####################################
+		################################## Helper Functions ################################## 
+		##################################### ------------ ################################# */
 		private bool checkChargeConditionMet() 
 		{
 			return Input.IsActionPressed("move_down") && IsOnFloor();
 		}
-		private bool checkRocketCondtionMet()
+		private bool isInRocketState()
 		{
 			return player_state == PlayerState.Rocket;
+		}
+		private bool checkRocketConditionMet()
+		{
+			return prev_state == PlayerState.Charge;
+		}
+		
+		private void playerIsChargingJump()
+		{
+			player_state = PlayerState.Charge;
+		}
+		private void changeToRocket()
+		{	// Transition of charging state to rocket state.
+			player_state = PlayerState.Rocket;
+			rocket_angle = this.GetNode<VisualPlayerArrow>("VisualPlayerArrow").getLaunchAngle();
+			rocket_counter = 2 * (charging_counter / 10);
+			charging_counter = 0;
 		}
 		
 		public class StateHelper
