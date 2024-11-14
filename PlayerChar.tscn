@@ -165,7 +165,7 @@ texture = ExtResource("2_yp1xs")
 centered = false
 hframes = 10
 vframes = 6
-frame = 1
+frame = 36
 
 [node name="animation" type="AnimationPlayer" parent="Sprite2D"]
 speed_scale = 4.0

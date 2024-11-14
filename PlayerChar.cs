@@ -18,13 +18,23 @@ public partial class PlayerChar : CharacterBody2D
 	// Player attributes
 	PlayerState player_state;
 	PlayerState prev_state;
-	int charging_counter;
-	int max_charging_counter;
-	int charge_level;
-	int max_charge_level;
-	int rocket_counter;
+	bool collided;
+	bool just_bounced;
 	
-	float rocket_angle;
+	struct ChargeStruct {
+		public int counter;
+		public int max_counter;
+		public int level;
+		public int max_level;
+	};
+	private ChargeStruct Charge;
+	struct RocketStruct {
+		public int counter;
+		public int stage;
+		public float angle;
+	}
+	private RocketStruct Rocket;
+
 
 	private PackedScene _hook = (PackedScene)GD.Load("res://Hook.tscn");
 	private TestMap _TestMap;
@@ -37,11 +47,16 @@ public partial class PlayerChar : CharacterBody2D
 	public PlayerChar() 
 	{
 		player_state = PlayerState.Normal;
-		charging_counter = 0;
-		max_charging_counter = 120;
-		charge_level = 0;
-		max_charge_level = 4;
-		rocket_counter = 0;
+		collided = false;
+		just_bounced = false;
+		// Charge
+		Charge.counter = 0;
+		Charge.level = 0;
+		Charge.max_counter = 120;
+		Charge.max_level = 4;
+		// Rocket
+		Rocket.counter = 0;
+		Rocket.stage = 0;
 	}
 	
 	public override void _Ready() 
@@ -52,6 +67,7 @@ public partial class PlayerChar : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		GD.Print(Charge.max_counter);
 		Vector2 velocity = Velocity;
 		prev_state = player_state;
 		switch (player_state)
@@ -103,25 +119,26 @@ public partial class PlayerChar : CharacterBody2D
 				}
 				break;
 			case PlayerState.Charge:
-				// Charge missile jump
-				if(charging_counter < max_charging_counter)
-					charging_counter++;
+				// Charge missile jump.
+				GD.Print(Charge.max_counter);
+				if(Charge.counter < Charge.max_counter)
+					Charge.counter += 1;
 				velocity.Y = Mathf.MoveToward(velocity.Y, 0, Speed);
 				velocity.X = Mathf.MoveToward(velocity.X, 0, Speed);
 				break;
 			case PlayerState.Rocket:
-				Vector2 rocket_accel = new Vector2(3, 0).Rotated(rocket_angle);
-				if (rocket_counter == 0)
+				Vector2 rocket_accel = new Vector2(3, 0).Rotated(Rocket.angle);
+				if (Rocket.counter == 0)
 					player_state = PlayerState.Normal;
-				else if (rocket_counter == 1) 
+				else if (Rocket.counter == 1) 
 				{
-					rocket_counter--;
+					Rocket.counter--;
 					velocity.Y = Mathf.MoveToward(velocity.Y, 0, Speed);
 					velocity.X = Mathf.MoveToward(velocity.X, 0, Speed);
 				}
-				else if (rocket_counter > 1)
+				else if (Rocket.counter > 1)
 				{
-					rocket_counter--;
+					Rocket.counter--;
 					velocity = rocket_accel * Speed;
 				}
 				break;
@@ -145,8 +162,20 @@ public partial class PlayerChar : CharacterBody2D
 			// change to normal state (doing nothing state) if no other state.
 			player_state = PlayerState.Normal;
 		}
+		
+		// Handle Exterior Events.
+		if (collided && isInRocketState() && !IsOnFloor() && just_bounced == false)
+		{
+			velocity = -velocity;
+			just_bounced = true;
+		}
+		else
+		{
+			just_bounced = false;
+		}
+		
 		Velocity = velocity;
-		MoveAndSlide();
+		collided = MoveAndSlide();
 	}
 		
 		/* ################################## ----------- ####################################
@@ -172,26 +201,9 @@ public partial class PlayerChar : CharacterBody2D
 		private void changeToRocket()
 		{	// Transition of charging state to rocket state.
 			player_state = PlayerState.Rocket;
-			rocket_angle = this.GetNode<VisualPlayerArrow>("VisualPlayerArrow").getLaunchAngle();
-			rocket_counter = 2 * (charging_counter / 10);
-			charging_counter = 0;
-		}
-		
-		public class StateHelper
-		{
-			// State Checkers
-			public static bool isInRocketState(PlayerState state)
-			{
-				return state == PlayerState.Rocket;
-			}
-			public static bool isInChargeState(PlayerState state)
-			{
-				return state == PlayerState.Charge;
-			}
-			public static bool isInNormalState(PlayerState state)
-			{
-				return state == PlayerState.Normal;
-			}
+			Rocket.angle = this.GetNode<VisualPlayerArrow>("VisualPlayerArrow").getLaunchAngle();
+			Rocket.counter = 2 * (Charge.counter / 10);
+			Charge.counter = 0;
 		}
 
 }

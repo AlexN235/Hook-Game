@@ -1,8 +1,8 @@
-res://PlayerChar.tscn
+res://VisualPlayerArrow.tscn
 res://PlayerChar.cs
+res://PlayerChar.tscn
 res://TestMap.tscn
 res://Plain Block.tscn
 res://Flat Wall.tscn
 res://FlatBrick.tscn
 res://3Platform.tscn
-res://VisualPlayerArrow.tscn
