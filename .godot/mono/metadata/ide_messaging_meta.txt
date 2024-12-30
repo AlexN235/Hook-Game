@@ -1,2 +1,2 @@
-﻿65083
-C:/Users/alexn/Desktop/Godot_v4.0-stable_mono_win64/Godot_v4.0-stable_mono_win64.exe
+﻿55317
+D:/Projects/Godot_v4.0-stable_mono_win64/Godot_v4.0-stable_mono_win64.exe

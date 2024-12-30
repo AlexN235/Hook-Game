@@ -32,6 +32,8 @@ public partial class PlayerChar : CharacterBody2D
 		public int counter;
 		public int stage;
 		public float angle;
+		public int recent_bounce_counter;
+		public Vector2 prev_velocity;
 	}
 	private RocketStruct Rocket;
 
@@ -57,6 +59,7 @@ public partial class PlayerChar : CharacterBody2D
 		// Rocket
 		Rocket.counter = 0;
 		Rocket.stage = 0;
+		Rocket.recent_bounce_counter = 0;
 	}
 	
 	public override void _Ready() 
@@ -67,7 +70,6 @@ public partial class PlayerChar : CharacterBody2D
 	
 	public override void _PhysicsProcess(double delta)
 	{
-		GD.Print(Charge.max_counter);
 		Vector2 velocity = Velocity;
 		prev_state = player_state;
 		switch (player_state)
@@ -120,13 +122,13 @@ public partial class PlayerChar : CharacterBody2D
 				break;
 			case PlayerState.Charge:
 				// Charge missile jump.
-				GD.Print(Charge.max_counter);
 				if(Charge.counter < Charge.max_counter)
 					Charge.counter += 1;
 				velocity.Y = Mathf.MoveToward(velocity.Y, 0, Speed);
 				velocity.X = Mathf.MoveToward(velocity.X, 0, Speed);
 				break;
 			case PlayerState.Rocket:
+				
 				Vector2 rocket_accel = new Vector2(3, 0).Rotated(Rocket.angle);
 				if (Rocket.counter == 0)
 					player_state = PlayerState.Normal;
@@ -141,7 +143,22 @@ public partial class PlayerChar : CharacterBody2D
 					Rocket.counter--;
 					velocity = rocket_accel * Speed;
 				}
+				
+				if (IsOnWall())
+				{
+					velocity.X = -Rocket.prev_velocity.X;
+					Rocket.recent_bounce_counter = 10;
+					GD.Print(Velocity);
+				}
+				else
+				{
+					if(Rocket.recent_bounce_counter > 0)
+						Rocket.recent_bounce_counter--;
+				}
+				Rocket.prev_velocity = velocity;
 				break;
+				
+				
 		}
 		
 		// Handle State Changes.
@@ -164,15 +181,7 @@ public partial class PlayerChar : CharacterBody2D
 		}
 		
 		// Handle Exterior Events.
-		if (collided && isInRocketState() && !IsOnFloor() && just_bounced == false)
-		{
-			velocity = -velocity;
-			just_bounced = true;
-		}
-		else
-		{
-			just_bounced = false;
-		}
+
 		
 		Velocity = velocity;
 		collided = MoveAndSlide();
